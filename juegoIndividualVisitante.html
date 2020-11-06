@@ -1,0 +1,306 @@
+<!doctype html>
+<!--
+	Author by FreeHTML5.co
+	Twitter: https://twitter.com/fh5co
+	Facebook: https://fb.com/fh5co
+	URL: https://freehtml5.co
+-->
+<html lang="en">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/slick.css">
+	<title>GameStore</title>
+
+	<!-- Agregamos JQUERY -->
+	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+</head>
+<body onload="CargarInfo()" >
+
+	<!-- Navigation -->
+	<nav class="site-navigation">
+		<div class="site-navigation-inner site-container">
+			<img src="./images/site-logo.png" alt="site logo">
+			
+			
+			<div class="main-navigation">
+				<ul class="main-navigation__ul">
+					<li><a href="principal.html">Catálogo</a></li>
+					<li><a href="login.html">LogIn</a></li>
+					<li><a href="registro.html">Registrar Usuario</a></li>
+				</ul>
+			</div>
+			<div id="myBtn" class="burger-container" onclick="myFunction(this)">
+				<div class="bar1"></div>
+				<div class="bar2"></div>
+				<div class="bar3"></div>
+				<br><a href="login.html" >Iniciar Sesión</a></br>
+			</div>
+			
+			<script>
+				function myFunction(x) {
+					x.classList.toggle("change");
+				}
+			</script>
+
+		</div>
+	</nav>
+	<!-- Navigation end -->
+
+	<!-- Top banner -->
+	<section class="fh5co-top-banner">
+		<div id="bannerJuego" class="top-banner__inner site-container">
+
+			
+		</div>
+	</section>
+	<!-- Top banner end -->
+
+	
+	<!-- Juegos Disponibles -->
+	<section class="fh5co-books">
+		<div id="titulo"class="site-container">
+						
+		</div>
+	</section>
+	<!-- juegos end -->
+
+	<!-- About me -->
+	<section class="fh5co-about-me">
+		<div id="fichaJuego" class="about-me-inner site-container">
+		</div>
+		<div class="about-me-bckg"></div>
+		
+	</section>
+	
+	<!-- About me end -->
+
+
+	<!-- Comentarios -->
+	<section class="fh5co-blog">
+		<div class="site-container">
+			<h2 class="universal-h2 universal-h2-bckg">Comentarios</h2>
+			<div id="comentsHTML" class="blog-slider blog-inner">
+
+			</div>
+			
+		</div>
+	</section>
+	<!-- Comentarios end -->
+
+
+
+	
+	<!-- Footer -->
+	<footer class="site-footer">
+
+		<div class="footer-bottom">
+			<div class="site-container footer-bottom-inner">
+				<p>© 2019 Author | Design by <a href="https://freehtml5.co/" target="_blank">freehtml5.co</a> | All rights Reserved.</p>
+				<div class="footer-bottom__img">
+					<img src="./images/footer-mastercard.png" alt="footer image">
+					<img src="./images/footer-paypal.png" alt="footer image">
+					<img src="./images/footer-visa.png" alt="footer image">
+					<img src="./images/footer-fedex.png" alt="footer image">
+					<img src="./images/footer-dhl.png" alt="footer image">
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- Footer end -->
+
+	<!-- Scripts -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/slick.min.js"></script>
+	<script src="js/main.js"></script>
+
+	<script>
+		function CargarInfo(){
+			const queryString = window.location.search;
+			const urlParams = new URLSearchParams(queryString);
+			const id = urlParams.get('id');
+			sessionStorage.setItem('id_juego',id)
+			const idUsuario = sessionStorage.getItem('id_usuario')
+
+			fetch('https://backend-proyecto2-201213330.herokuapp.com/obtener-juego?id='+id,{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(res => res.json())
+			.catch(err =>{
+				console.error('Error:', err)
+				alert('Ocurrió un error, ver la consola')
+			})
+			.then(response =>{
+				console.log(response)
+				var mi_Juego = response['data'];
+				var baner_Juego = document.querySelector('#bannerJuego')
+				baner_Juego.innerHTML += `	<div class="top-banner__image">
+												<img src="${mi_Juego.banner}" width="1100" height="350" alt="author image">
+											</div>`
+				
+				var titulo_juego = document.querySelector('#titulo')
+				titulo_juego.innerHTML += `	<br>
+											<h2 class="universal-h2 universal-h2-bckg">${mi_Juego.nombre}</h2>`
+
+				var ficha_Juego = document.querySelector('#fichaJuego')
+				ficha_Juego.innerHTML += `	<article class="portfolio-wrapper">
+												<div class="portfolio__img">
+													<img src="${mi_Juego.foto}" class="about-me__profile" alt="about me profile picture">
+												</div>
+												<div class="portfolio__bottom">
+													<div class="portfolio__name">
+														<span></span><h2 class="universal-h2">${mi_Juego.nombre}</h2>
+													</div>
+													<p>Precio: Q. ${mi_Juego.precio}</p>
+												</div>
+											</article>
+											<div class="about-me__text">
+												<div class="about-me-slider">
+													<div class="about-me-single-slide">
+														<h2 class="universal-h2 universal-h2-bckg">Descripción:</h2>
+														<p><span>${mi_Juego.descripcion.charAt(0)}</span>${mi_Juego.descripcion.substr(1)}</p>
+														<h4>Año: ${mi_Juego.año}</h4>
+														<p class="p-white">${devolverguion(mi_Juego.categoria1,mi_Juego.categoria2,mi_Juego.categoria3)}</p>
+														<p>
+															
+													</div>
+												</div>
+											</div>`
+
+			})
+
+			fetch('https://backend-proyecto2-201213330.herokuapp.com/obtener-todos-comentarios?id='+id,{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(res => res.json())
+			.catch(err =>{
+				console.error('Error:', err)
+				alert('Ocurrió un error al leer comentarios, ver la consola')
+			})
+			.then(response =>{
+				console.log(response)
+				var mis_comentarios = response;
+				var seccionComentarios = document.querySelector('#comentsHTML')
+
+				mis_comentarios.forEach(element => {
+				seccionComentarios.innerHTML += `	<div class="single-blog">
+														<div class="single-blog__text">
+															<h4>${element.nameUser}</h4>
+															<span>${element.fecha}</span>
+															<p>${element.cadena}</p>
+														</div>
+													</div>`
+				});
+
+			})
+			function devolverguion(objeto1,objeto2,objeto3){
+				
+				if(objeto1!=""&objeto2!=""&objeto3==""){
+					return(objeto1+" - "+objeto2+objeto3);
+				}
+				if(objeto1==""&objeto2!=""&objeto3!=""){
+					return(objeto1+objeto2+" - "+objeto3);
+				}
+				if(objeto1!=""&objeto2==""&objeto3!=""){
+					return(objeto1+" - "+objeto3);
+				}
+				if(objeto1!=""&objeto2!=""&objeto3!=""){
+					return(objeto1+" - "+objeto2+" - "+objeto3);
+				}else{
+					return(objeto1+objeto2+objeto3);
+				}
+			}
+		}
+
+		
+	</script>
+
+	<script>
+		const idUsuario = sessionStorage.getItem('id_usuario')
+		const id_game = sessionStorage.getItem('id_juego')
+		
+		$("#fichaJuego").submit(function(event){
+			//Evitamos que el formulario se envíe de manera tradicional
+			event.preventDefault();
+			var $form = $(this),
+			url ='https://backend-proyecto2-201213330.herokuapp.com/agregar-a-biblioteca';
+
+			var posting = $.post(url,{
+				id_usuario : idUsuario,
+				id_juego : id_game
+			})
+
+			posting.done(function(data){
+				var content = $(data).find("#content");
+				var respuesta = content['prevObject'][0]
+
+				switch(respuesta['estado_agregado']){
+					case 0:
+						window.alert("Ya posees este juego en tu biblioteca");
+						break;
+					case 1:
+						window.alert("Juego agregado a tu biblioteca exitosamente");
+						break;
+					case 2:
+						window.alert("El usuario no existe");
+						break;
+					default:
+						window.alert("Error, contacte con administrador");
+				}
+			})
+		})
+	</script>
+
+<script>
+	//const idUsuario = sessionStorage.getItem('id_usuario')
+	//const id_game = sessionStorage.getItem('id_juego')
+	
+	$("#areaComentarios").submit(function(event2){
+		//Evitamos que el formulario se envíe de manera tradicional
+		event2.preventDefault();
+		var $form = $(this),
+		comentarioJuego = $form.find("textarea[name='contenido']").val(),
+		fecha = new Date(),
+		url ='https://backend-proyecto2-201213330.herokuapp.com/agregar-comentario';
+
+		
+
+		var posting = $.post(url,{
+			id_usuario : idUsuario,
+			id_juego : id_game,
+			comentario : comentarioJuego,
+			fecha : (fecha.getDate() + "/" + (fecha.getMonth() +1) + "/" + fecha.getFullYear())
+		})
+
+		
+
+		posting.done(function(data){
+			var content = $(data).find("#content");
+			var respuesta = content['prevObject'][0]
+
+			switch(respuesta['comentario_agregado']){
+				case 0:
+					window.alert("no se agregó");
+					
+					break;
+				case 1:
+					window.alert("si se agrego");
+					window.location.reload();
+					break;
+				default:
+					window.alert("Error en comentario");
+					
+			}
+		})
+	})
+</script>
+
+</body>
+</html>

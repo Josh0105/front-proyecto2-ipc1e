@@ -1,0 +1,207 @@
+<!doctype html>
+<!--
+	Author by FreeHTML5.co
+	Twitter: https://twitter.com/fh5co
+	Facebook: https://fb.com/fh5co
+	URL: https://freehtml5.co
+-->
+<html lang="en">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/slick.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title>GameStore</title>
+
+	<!-- Agregamos JQUERY -->
+	
+	
+
+</head>
+<body>
+
+	<!-- Navigation -->
+	<nav class="site-navigation">
+		<div class="site-navigation-inner site-container">
+			<img src="./images/site-logo.png" alt="site logo">
+			
+			
+			<div  class="main-navigation">
+				<ul class="main-navigation__ul">
+					<li><a href="principalUserAdmin.html">Catálogo</a></li>
+					<li><a href="bibliotecaAdmin.html">Mi Biblioteca</a></li>
+					<li><a href="perfilAdmin.html">Perfil</a></li>
+					<li><a href="cargaMasiva.html">Carga Masiva</a></li>
+					<li><a href="#">CRUD de Videojuegos</a></li>
+					<li><a href="#">Generar Reportes</a></li>
+					<li><a href="crearAdmin.html">Crear Usuario</a></li>
+				</ul>				
+			</div>
+			<div id="myBtn" class="burger-container" onclick="myFunction(this)">
+				<div class="bar1"></div>
+				<div class="bar2"></div>
+				<div class="bar3"></div>
+				<br><a href="login.html" >Cerrar Sesión</a></br>
+			</div>
+			
+			<script>
+				function myFunction(x) {
+					x.classList.toggle("change");
+				}
+			</script>
+
+		</div>
+	</nav>
+	<!-- Navigation end -->
+
+	<!-- Top banner -->
+	<section class="fh5co-top-banner">
+		<div class="top-banner__inner site-container">
+						
+		</div>
+	</section>
+	<!-- Top banner end -->
+
+
+
+
+
+	
+	<!-- Footer -->
+	<footer class="site-footer">
+		<div class="site-container">
+			<div class="footer-inner">
+				<div class="footer-contact-form">
+					<h6>CARGA MASIVA</h6>
+					
+					<form id="loginForm" class="contact-form">
+						
+						<div class="contact-form__input2">
+							<label for="files">Carga un archivo en formato .CSV:</label>
+						</div>
+						<div class="contact-form__input2">
+							<input type="file" id="files" class="form-control" accept=".csv" required />
+							
+					  	</div>
+					  	<div class="contact-form__input2">
+						   <button type="submit" id="submit-file" class="submit-button">Cargar Archivo</button>
+					  	</div>
+												
+					</form>
+					
+				</div>
+			</div>
+		</div>		
+
+		<div class="footer-bottom">
+			<div class="site-container footer-bottom-inner">
+				<p>© 2019 Author | Design by <a href="https://freehtml5.co/" target="_blank">freehtml5.co</a> | All rights Reserved.</p>
+				<div class="footer-bottom__img">
+					<img src="./images/footer-mastercard.png" alt="footer image">
+					<img src="./images/footer-paypal.png" alt="footer image">
+					<img src="./images/footer-visa.png" alt="footer image">
+					<img src="./images/footer-fedex.png" alt="footer image">
+					<img src="./images/footer-dhl.png" alt="footer image">
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- Footer end -->
+
+	<!-- Scripts -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/slick.min.js"></script>
+	<script src="js/main.js"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+	<script>
+		$('#submit-file').on("click",function(e){
+		e.preventDefault();
+			$('#files').parse({
+				config: {
+					delimiter: "auto",
+					encoding : "ISO-8859-1", 
+					complete: displayHTMLTable,
+				},
+				before: function(file, inputElem)
+				{
+				console.log("Parsing file...", file);
+				},
+				error: function(err, file)
+				{
+				console.log("ERROR:", err, file);
+				},
+				complete: function()
+				{
+				console.log("Done with all files");
+				}
+			});
+		});
+
+		function displayHTMLTable(results){
+			var table = "<table class='table'>";
+			var data = results.data;
+			console.log(results);
+
+			var resultadoCarga = true;
+
+			for(i=1;i<data.length;i++){
+				var row = data[i];
+				var cells = row.join(",").split(",");
+				
+				console.log(cells.length);
+				if (cells.length == 9){
+					var nombreJuego = cells[0];
+					var anioJuego = cells[1];
+					var precioJuego = cells[2];
+					var categoria1 = cells[3];
+					var categoria2 = cells[4];
+					var categoria3 = cells[5];
+					var fotoJuego = cells[6];
+					var bannerJuego = cells[7];
+					var descripcionJuego = cells[8];
+					var url ='https://backend-proyecto2-201213330.herokuapp.com/nuevo-juego';
+
+					var posting = $.post(url,{
+						nombre_juego : nombreJuego,
+						anio : anioJuego,
+						precio : precioJuego,
+						categoria_1 : categoria1,
+						categoria_2 : categoria2,
+						categoria_3 : categoria3,
+						foto : fotoJuego,
+						banner : bannerJuego,
+						descripcion : descripcionJuego
+					})
+
+					posting.done(function(data){
+						var content = $(data).find("#content");
+						var respuesta = content['prevObject'][0]
+
+						if(respuesta['estado_creacion'] == false){
+							resultadoCarga = false;
+						}
+					})
+
+				}
+			}
+
+			if(resultadoCarga==false){
+				window.alert("Error en alguna linea del documento")
+
+			}else{
+				window.alert("Carga Correcta")
+				window.location.href = "principalUserAdmin.html";
+			}
+		}
+
+	</script>
+
+
+
+
+</body>
+</html>

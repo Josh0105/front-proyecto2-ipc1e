@@ -1,0 +1,257 @@
+<!doctype html>
+<!--
+	Author by FreeHTML5.co
+	Twitter: https://twitter.com/fh5co
+	Facebook: https://fb.com/fh5co
+	URL: https://freehtml5.co
+-->
+<html lang="en">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/slick.css">
+	<title>GameStore</title>
+
+	<!-- Agregamos JQUERY -->
+	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+</head>
+<body onload="CargarInfo()">
+
+	<!-- Navigation -->
+	<nav class="site-navigation">
+		<div class="site-navigation-inner site-container">
+			<img src="./images/site-logo.png" alt="site logo">
+			<div id="opciones" class="main-navigation">
+			
+			</div>
+			<div id="myBtn" class="burger-container" onclick="myFunction(this)">
+				<div class="bar1"></div>
+				<div class="bar2"></div>
+				<div class="bar3"></div>
+			</div>
+			<script>
+				function myFunction(x) {
+					x.classList.toggle("change");
+				}
+			</script>
+
+		</div>
+	</nav>
+	<!-- Navigation end -->
+
+	
+	<!-- Footer -->
+	<footer class="site-footer">
+		<div class="site-container">
+			<div class="footer-inner">
+				<div class="footer-contact-form">
+					<h6>Mi Perfil</h6>
+					<form id="RegistroForm" class="contact-form">
+						
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<div class="site-container footer-bottom-inner">
+				<p>© 2020 GameCenter | Design by <a href="https://google.com/" target="_blank">Jonathan Calo</a> | All rights Reserved.</p>
+				<div class="footer-bottom__img">
+					<img src="./images/footer-mastercard.png" alt="footer image">
+					<img src="./images/footer-paypal.png" alt="footer image">
+					<img src="./images/footer-visa.png" alt="footer image">
+					<img src="./images/footer-fedex.png" alt="footer image">
+					<img src="./images/footer-dhl.png" alt="footer image">
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- Footer end -->
+
+	<!-- Scripts -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/slick.min.js"></script>
+	<script src="js/main.js"></script>
+
+
+	<script>
+		function CargarInfo(){
+
+			var admin = sessionStorage.getItem('admin')
+			var juegos_cards = document.querySelector('#opciones')
+			if(admin == 1){
+				juegos_cards.innerHTML += `	<ul class="main-navigation__ul">
+												<li><a href="principalUserAdmin.html">Catálogo</a></li>
+												<li><a href="bibliotecaAdmin.html">Mi Biblioteca</a></li>
+												<li><a href="perfilAdmin.html">Perfil</a></li>
+												<li><a href="cargaMasiva.html">Carga Masiva</a></li>
+												<li><a href="#">CRUD de Videojuegos</a></li>
+												<li><a href="#">Generar Reportes</a></li>
+												<li><a href="crearAdmin.html">Crear Usuario</a></li>
+											</ul>`
+			}else{
+				juegos_cards.innerHTML += `	<ul class="main-navigation__ul">
+												<li><a href="principalUserAdmin.html">Catálogo</a></li>
+												<li><a href="bibliotecaAdmin.html">Mi Biblioteca</a></li>
+												<li><a href="perfilAdmin.html">Perfil</a></li>
+											</ul>`
+			}
+
+
+			const idUsuario = sessionStorage.getItem('id_usuario')
+
+			fetch('https://backend-proyecto2-201213330.herokuapp.com/obtener-datos-usuario?id='+idUsuario, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(res => res.json())
+			.catch(err =>{
+				console.log(err)
+				alert('Ocurrio un error al momento de obtener los datos del usuario')
+			}).then(response =>{
+				console.log(response);
+				var datos_usuario = response;
+				var formulariolleno = document.querySelector('#RegistroForm')
+
+				formulariolleno.innerHTML += `	<h5>Nombre</h5>
+												<div class="contact-form__input">
+													<input name="name" type="text" placeholder="Nombre" value="${datos_usuario.nombre}">
+												</div>
+												<h5>Apellido</h5>
+												<div class="contact-form__input">
+													<input name="lastName" type="text" placeholder="Apellido" value="${datos_usuario.apellido}">
+												</div>
+												<h5>Nombre de Usuario</h5>
+												<div class="contact-form__input">
+													<input name="user_name" type="text" placeholder="Usuario" value="${datos_usuario.userName}">
+												</div>
+												<h5>Contraseña</h5>
+												<div class="contact-form__input">
+													<input name="passw" type="password" placeholder="Contraseña" value="${datos_usuario.contrasena}">
+												</div>
+												<h5>Confirmar contraseña</h5>
+												<div class="contact-form__input">
+													<input name="confirm_passw" type="password" placeholder="Confirmar contraseña" value="${datos_usuario.contrasena}">
+												</div>
+												<input type="submit" name="submit" value="Aplicar Cambio" class="submit-button">
+												<a href="principalUserAdmin.html" class="submit-button" >Cancelar</a>`
+				
+			})
+
+			
+
+			
+		}
+
+		
+
+	</script>
+
+
+
+	<!-- CODIGO PARA CAMBIAR LOS DATOS -->
+	<script>
+		const idUsuario = sessionStorage.getItem('id_usuario')
+		$("#RegistroForm").submit(function(event){
+			//Evitamos que el formulario se envíe de manera tradicional
+			event.preventDefault();
+			//OBTENEMOS VALORES DEL FORMULARIO
+
+			var $form = $(this),
+			name = $form.find("input[name='name']").val(),
+			lastName = $form.find("input[name='lastName']").val(),
+			userName = $form.find("input[name='user_name']").val(),
+			passw = $form.find("input[name='passw']").val(),
+			passw2 = $form.find("input[name='confirm_passw']").val(),
+			url ='https://backend-proyecto2-201213330.herokuapp.com/modificar-usuario';
+
+			
+
+			var posting = $.post(url,{
+				id_usuario : idUsuario,
+				nombre : name,
+				apellido : lastName,
+				user_name : userName,
+				contrasena : passw,
+				contrasena2 : passw2
+			})
+
+			posting.done(function(data){
+				var content = $(data).find("#content");
+				var respuesta = content['prevObject'][0]
+				
+
+				
+				switch(respuesta['estado_creacion']){
+					case 1:
+						window.alert("Modificación exitosa");
+						sessionStorage.setItem('nombre_usuario',name)
+						clearForm(RegistroForm);
+						window.location.href = "principalUserAdmin.html";
+						break;
+					case 2:
+						window.alert("Nombre de usuario debe iniciar con una letra");
+						break;
+					case 3:
+						window.alert("Nombre de usuario solo puede llevar números o letras");
+						break;
+					case 4:
+						window.alert("Nombre de usuario ya existe con otro identificador");
+						break;
+					case 5:
+						window.alert("La contraseña no coincide");
+						break;
+					case 6:
+						window.alert("Existen datos sin llenar");
+						break;
+					default:
+						window.alert("Error, contacte con administrador");
+				}
+
+
+				
+					
+			})
+
+		});
+	</script>
+
+
+
+	
+	<script>
+		function clearForm(oForm) {
+			var elements = oForm.elements;
+			oForm.reset();
+			for(i=0; i<elements.length; i++) {
+				field_type = elements[i].type.toLowerCase();
+				switch(field_type) {
+					case "text":
+					case "email":
+					case "password":
+					case "textarea":
+					case "hidden":
+	  					elements[i].value = "";
+	  					break;
+					case "radio":
+					case "checkbox":
+						if (elements[i].checked) {
+		  				elements[i].checked = false;
+	  					}
+	  					break;
+					case "select-one":
+					case "select-multi":
+	  					elements[i].selectedIndex = -1;
+	  					break;
+					default:
+	  					break;
+  				}
+			}
+		}
+	</script>
+
+</body>
+</html>
