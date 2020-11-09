@@ -24,6 +24,21 @@
   padding: 0;
   font-family: "Calisto-MT"; }
 
+.site-container3 {
+  width: 40%;
+  margin: 0 84%;
+  height: 80px; }
+  @media (max-width: 1250px) {
+    .site-container3 {
+      width: 50%; } }
+
+.site-container2 {
+  width: 95%;
+  margin: 0 auto; }
+  @media (max-width: 1250px) {
+    .site-container2 {
+      width: 90%; } }
+
 .site-container {
   width: 90%;
   margin: 0 auto; }
@@ -207,7 +222,7 @@
     font-size: 0; }
     @media (max-width: 1250px) {
       .top-banner__inner .top-banner__image {
-        width: 50%; }
+        width: 100%; }
         .top-banner__inner .top-banner__image img {
           width: 100%; } }
     @media (max-width: 520px) {
@@ -734,8 +749,16 @@
   .social-icons {
     margin: 35px 0; } }
 
+.site-footerlog {
+  padding-top: 160px;
+  background-color: #343434; }
+  @media (max-width: 1250px) {
+    .site-footerlog {
+      padding-top: 60px; } }
+
+
 .site-footer {
-  padding-top: 120px;
+  padding-top: 50px;
   background-color: #343434; }
   @media (max-width: 1250px) {
     .site-footer {
@@ -830,16 +853,31 @@
       @media (max-width: 520px) {
         .footer-contact-form .contact-form__input input {
           width: 100%; } }
+
   .footer-contact-form textarea {
     box-sizing: border-box;
     height: 90px;
     width: 100%;
     margin-bottom: 20px;
     padding: 20px;
-    border: 1px solid #838383;
-    background-color: #9b9b9b;
+    border: 1px solid #404040;
+    background-color: #252525;
     resize: none;
-    color: #000000; }
+    color: #c18f59; }
+
+  .footer-contact-form .submit-button2 {
+    padding: 5px 50px;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #fff;
+    background-color: #c18f59;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: 0.3s ease; }
+    .footer-contact-form .submit-button2:hover {
+      background-color: #777; }
+
   .footer-contact-form .submit-button1 {
     position: relative;
     left: 130px;
@@ -968,4 +1006,143 @@
 
 .container-4:hover button.icon:hover{
   background: #c18f59;
+}
+
+/*** Table **/
+
+
+div.table-title {
+  display: block;
+  margin: auto;
+  max-width: 600px;
+  padding:px;
+  width: 100%;
+}
+
+.table-title h3 {
+   color: #fafafa;
+   font-size: 30px;
+   font-weight: 400;
+   font-style:normal;
+   font-family: "Roboto", helvetica, arial, sans-serif;
+   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+   text-transform:uppercase;
+}
+
+
+/*** Table Styles **/
+
+.table-fill {
+  background: white;
+  border-radius:3px;
+  border-collapse: collapse;
+  height: 320px;
+  margin: auto;
+  max-width: 600px;
+  padding:5px;
+  width: 100%;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  animation: float 5s infinite;
+}
+ 
+th {
+  color:#D5DDE5;;
+  background:#1b1e24;
+  border-bottom:4px solid #9ea7af;
+  border-right: 1px solid #343a45;
+  font-size:18px;
+  font-weight: 100;
+  padding:13px;
+  text-align:center;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  vertical-align:middle;
+}
+
+th:first-child {
+  border-top-left-radius:3px;
+}
+ 
+th:last-child {
+  border-top-right-radius:3px;
+  border-right:none;
+}
+  
+tr {
+  border-top: 1px solid #C1C3D1;
+  border-bottom: 1px solid #C1C3D1;
+  color:#666B85;
+  font-size:16px;
+  font-weight:normal;
+  text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
+}
+ 
+tr:hover td {
+  background:#4E5066;
+  color:#FFFFFF;
+  border-top: 1px solid #22262e;
+}
+ 
+tr:first-child {
+  border-top:none;
+}
+
+tr:last-child {
+  border-bottom:none;
+}
+ 
+tr:nth-child(odd) td {
+  background:#EBEBEB;
+}
+ 
+tr:nth-child(odd):hover td {
+  background:#4E5066;
+}
+
+tr:last-child td:first-child {
+  border-bottom-left-radius:3px;
+}
+ 
+tr:last-child td:last-child {
+  border-bottom-right-radius:3px;
+}
+ 
+td {
+  max-width: 160px;
+  background:#FFFFFF;
+  padding:13px;
+  text-align:justify;
+  vertical-align:middle;
+  font-weight:300;
+  font-size:16px;
+  text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+  border-right: 1px solid #C1C3D1;
+  
+}
+
+td:last-child {
+  border-right: 0px;
+}
+
+th.text-left {
+  text-align: left;
+}
+
+th.text-center {
+  text-align: center;
+}
+
+th.text-right {
+  text-align: right;
+}
+
+td.text-left {
+  text-align: left;
+}
+
+td.text-center {
+  text-align: center;
+}
+
+td.text-right {
+  text-align: right;
 }

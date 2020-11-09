@@ -1,0 +1,172 @@
+<!doctype html>
+<!--
+	Author Jonathan Calo
+	Carnet 201213330
+-->
+<html lang="en">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/slick.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title>GameStore</title>
+
+	<!-- Agregamos JQUERY -->
+	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+</head>
+<body onload="CargarInfo()" >
+
+	<!-- Navigation -->
+	<nav class="site-navigation">
+		<div class="site-navigation-inner site-container">
+			<img src="./images/site-logo.png" alt="site logo">
+			
+			
+			<div id="opciones" class="main-navigation">
+				<ul class="main-navigation__ul">
+					<li><a href="principalUserAdmin.html">Catálogo</a></li>
+					<li><a href="bibliotecaAdmin.html">Mi Biblioteca</a></li>
+					<li><a href="perfilAdmin.html">Perfil</a></li>
+					<li><a href="cargaMasiva.html">Carga Masiva</a></li>
+					<li><a href="CRUD.html">CRUD de Videojuegos</a></li>
+					<li><a href="CRUDReportes.html">Generar Reportes</a></li>
+					<li><a href="crearAdmin.html">Crear Usuario</a></li>
+				</ul>
+			</div>
+			<div id="myBtn" class="burger-container" onclick="myFunction(this)">
+				<div class="bar1"></div>
+				<div class="bar2"></div>
+				<div class="bar3"></div>
+				<br><a href="login.html" >Cerrar Sesión</a></br>
+			</div>
+			
+			<script>
+				function myFunction(x) {
+					x.classList.toggle("change");
+				}
+			</script>
+
+		</div>
+	</nav>
+	<!-- Navigation end -->
+
+	<!-- Top banner -->
+	<section class="fh5co-top-banner">
+		<div class="top-banner__inner site-container">
+						
+		</div>
+	</section>
+	<!-- Top banner end -->
+
+	
+	<!-- Juegos Disponibles -->
+	<section class="fh5co-books">
+		<div class="site-container">
+			<h2 class="universal-h2 universal-h2-bckg">Seleccione un juego para mostrar comentarios</h2>
+			<div class="site-container">
+				<div class="site-container">
+					<div class="site-container">
+						<div class="site-container">
+						<table>
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Nombre</th>
+									<th>Año</th>
+									<th>Precio</th>
+									<th>Categoría 1</th>
+									<th>Categoría 2</th>
+									<th>Categoría 3</th>
+									<th>Comentarios</th>
+								</tr>
+							</thead>
+							<tbody id="filas">
+							
+							</tbody>
+						</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br>
+			
+			
+		</div>
+	</section>
+	<!-- juegos end -->
+
+
+
+	<!-- Footer -->
+	<footer class="site-footer">
+
+		<div class="footer-bottom">
+			<div class="site-container footer-bottom-inner">
+				<p>© 2020 Author | Design by <a href="https://google.com" target="_blank">Jonathan Calo</a> | All rights Reserved.</p>
+				<div class="footer-bottom__img">
+					<img src="./images/footer-mastercard.png" alt="footer image">
+					<img src="./images/footer-paypal.png" alt="footer image">
+					<img src="./images/footer-visa.png" alt="footer image">
+					<img src="./images/footer-fedex.png" alt="footer image">
+					<img src="./images/footer-dhl.png" alt="footer image">
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- Footer end -->
+
+	<!-- Scripts -->
+	<script src="js/slick.min.js"></script>
+	<script src="js/main.js"></script>
+	<!-- FIN Scripts -->
+
+	<!-- Codigo construir tabla juegos -->
+	<script>
+		function CargarInfo(){
+
+			fetch('https://backend-proyecto2-201213330.herokuapp.com/obtener-todos-juegos', {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(res => res.json())
+			.catch(err =>{
+				console.log(err)
+				alert('Ocurrio un error al momento de obtener los registros')
+			}).then(response =>{
+				var mis_juegos = response;
+				var filas_juegos = document.querySelector('#filas')
+
+				mis_juegos.forEach(element => {
+					
+				filas_juegos.innerHTML +=  `<tr>
+												<td>${element.id}</td>
+												<td>${element.nombre}</td>
+												<td>${element.año}</td>
+												<td>${element.precio}</td>
+												<td>${element.categoria1}</td>
+												<td>${element.categoria2}</td>
+												<td>${element.categoria3}</td>
+												<td>
+													<div class="footer-contact-form">
+													<form id="RegistroForm" class="contact-form">
+														<a href="reporteComentario.html?id=${element.id}" class="submit-button2" >
+															Ver
+														</a>
+													</form>
+													</div>
+												</td>
+											</tr>`
+				});
+			})
+		}
+	</script>
+	<!-- fin Codigo construir tabla juegos -->
+	
+
+
+</body>
+</html>

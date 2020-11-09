@@ -1,9 +1,7 @@
 <!doctype html>
 <!--
-	Author by FreeHTML5.co
-	Twitter: https://twitter.com/fh5co
-	Facebook: https://fb.com/fh5co
-	URL: https://freehtml5.co
+	Author Jonathan Calo
+	Carnet 201213330
 -->
 <html lang="en">
 <head>
@@ -101,7 +99,7 @@
 
 		<div class="footer-bottom">
 			<div class="site-container footer-bottom-inner">
-				<p>© 2019 Author | Design by <a href="https://freehtml5.co/" target="_blank">freehtml5.co</a> | All rights Reserved.</p>
+				<p>© 2020 Author | Design by <a href="https://google.com" target="_blank">Jonathan Calo</a> | All rights Reserved.</p>
 				<div class="footer-bottom__img">
 					<img src="./images/footer-mastercard.png" alt="footer image">
 					<img src="./images/footer-paypal.png" alt="footer image">
@@ -115,10 +113,12 @@
 	<!-- Footer end -->
 
 	<!-- Scripts -->
-	<script src="js/jquery.min.js"></script>
 	<script src="js/slick.min.js"></script>
 	<script src="js/main.js"></script>
+	<!-- FIN Scripts -->
 
+
+	<!-- Script de carga de juegos -->
 	<script>
 		var contador=0;
 		var anterior=false;
@@ -153,7 +153,6 @@
 												
 											</div>`
 				});
-
 			})
 
 			function devolverguion(objeto1,objeto2,objeto3){
@@ -173,14 +172,11 @@
 						return(objeto1+objeto2+objeto3);
 					}
 			}
-
-			
 		}
-
-		
-
 	</script>
+	<!-- FIN Script de carga de juegos -->
 
+	<!-- Script BUSQUEDA -->
 	<script>
 		$("#busqueda").submit(function(event){
 			//Evitamos que el formulario se envíe de manera tradicional
@@ -204,24 +200,22 @@
 					//clearForm(recuperarForm);
 					sessionStorage.setItem('resultados_busqueda',respuesta['resultados'])
 					sessionStorage.setItem('valor_buscado',val)
-					window.alert("Resultados encontrados: " + respuesta['resultados'])
+					//window.alert("Resultados encontrados: " + respuesta['resultados'])
 					clearForm(busqueda);
 					window.location.href = "resultadoBusquedaVisitante.html";
 				}else{
 					window.alert("error")
-					
 				}
-					
 			})
 
 			}else{
 				window.alert("Ingrese algún valor en la búsqueda")
 			}
-						
-			
-
 		});
 	</script>
+	<!-- FIN Script BUSQUEDA -->
+
+	<!-- Script limpieza de formulario -->
 	<script>
 		function clearForm(oForm) {
 			var elements = oForm.elements;
@@ -252,7 +246,7 @@
 			}
 		}
 	</script>
-
+	<!-- FIN Script limpieza de formulario -->
 
 </body>
 </html>

@@ -1,0 +1,186 @@
+<!doctype html>
+<!--
+	Author Jonathan Calo
+	Carnet 201213330
+-->
+<html lang="en">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/slick.css">
+	<title>GameStore</title>
+
+	<!-- Agregamos JQUERY -->
+	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+</head>
+<body onload="CargarInfo()" >
+
+	<!-- Navigation -->
+	<nav class="site-navigation">
+		<div class="site-navigation-inner site-container">
+			<img src="./images/site-logo.png" alt="site logo">
+			
+			
+			<div class="main-navigation">
+				<ul class="main-navigation__ul">
+					<li><a href="principalUserAdmin.html">Catálogo</a></li>
+					<li><a href="bibliotecaAdmin.html">Mi Biblioteca</a></li>
+					<li><a href="perfilAdmin.html">Perfil</a></li>
+					<li><a href="cargaMasiva.html">Carga Masiva</a></li>
+					<li><a href="CRUD.html">CRUD de Videojuegos</a></li>
+					<li><a href="CRUDReportes.html">Generar Reportes</a></li>
+					<li><a href="crearAdmin.html">Crear Usuario</a></li>
+				</ul>
+			</div>
+			<div id="myBtn" class="burger-container" onclick="myFunction(this)">
+				<div class="bar1"></div>
+				<div class="bar2"></div>
+				<div class="bar3"></div>
+				<br><a href="login.html" >Cerrar Sesión</a></br>
+			</div>
+			
+			<script>
+				function myFunction(x) {
+					x.classList.toggle("change");
+				}
+			</script>
+
+		</div>
+	</nav>
+	<!-- Navigation end -->
+
+	<!-- Top banner -->
+	<section class="fh5co-top-banner">
+		<div class="top-banner__inner site-container">
+						
+		</div>
+	</section>
+	<!-- Top banner end -->
+
+	
+	<!-- Comentarios -->
+	<section class="fh5co-books">
+		
+			<h2 id="titulo" class="universal-h2 universal-h2-bckg">
+				Comentarios
+			</h2>
+			<div class="footer-contact-form">
+				<form class="contact-form">
+					<div class="site-container3">
+						<div class="site-container">
+						<a href="seleccionReporteComentario.html" class="submit-button2" >
+							Regresar
+						</a>
+						</div>
+					</div>
+					
+				</form>
+			</div>
+			<div class="site-container">
+				<div class="site-container">
+					<div class="site-container">
+						<div class="site-container">
+							<div class="site-container">
+								<div class="site-container">
+									<div class="site-container">
+										<div class="site-container">
+											<div class="site-container">
+												<div class="site-container">
+													<table id="table">
+														<thead> 
+															<tr>
+																<th>No.</th>
+																<th>Usuario</th>
+																<th>Fecha</th>
+																<th>Comentarioo</th>
+															</tr>
+														</thead>
+														<tbody id="filas">
+														
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br>
+	</section>
+	<!-- fin comentarios -->
+
+
+	
+	<!-- Footer -->
+	<footer class="site-footer">
+
+		<div class="footer-bottom">
+			<div class="site-container footer-bottom-inner">
+				<p>© 2020 Author | Design by <a href="https://google.com" target="_blank">Jonathan Calo</a> | All rights Reserved.</p>
+				<div class="footer-bottom__img">
+					<img src="./images/footer-mastercard.png" alt="footer image">
+					<img src="./images/footer-paypal.png" alt="footer image">
+					<img src="./images/footer-visa.png" alt="footer image">
+					<img src="./images/footer-fedex.png" alt="footer image">
+					<img src="./images/footer-dhl.png" alt="footer image">
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- Footer end -->
+
+	<!-- Scripts -->
+	<script src="js/slick.min.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/jspdf.min.js"></script>
+	<script src="js/jspdf.plugin.autotable.min.js"></script>
+	<script src="js/jspdf.plugin.autotable.js"></script>
+	<!-- fin Scripts -->
+
+	<!-- cargar comentarios -->
+	<script>
+		function CargarInfo(){
+			const queryString = window.location.search;
+			const urlParams = new URLSearchParams(queryString);
+			const ide = urlParams.get('id');
+						
+			fetch('https://backend-proyecto2-201213330.herokuapp.com/obtener-todos-comentarios?id='+ide,{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(res => res.json())
+			.catch(err =>{
+				console.error('Error:', err)
+				alert('Ocurrió un error al leer comentarios, ver la consola')
+			})
+			.then(response =>{
+				console.log(response)
+				var mis_comentarios = response;
+				var filas_comentarios = document.querySelector('#filas')
+				
+				var contador = 0;
+
+				mis_comentarios.forEach(element => {
+					contador += 1;	
+				filas_comentarios.innerHTML +=  `	<tr>
+											<td >${contador}</td>
+											<td >${element.nameUser}</td>
+											<td >${element.fecha}</td>
+											<td >${element.cadena}</td>
+										</tr>`
+				});
+			});
+		}
+	</script>
+	<!-- fin cargar comentarios -->
+	
+</body>
+</html>

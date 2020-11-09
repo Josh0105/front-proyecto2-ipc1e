@@ -1,0 +1,190 @@
+<!doctype html>
+<!--
+	Author Jonathan Calo
+	Carnet 201213330
+-->
+<html lang="en">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/slick.css">
+	<title>GameStore</title>
+
+	<!-- Agregamos JQUERY -->
+	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+</head>
+<body onload="CargarInfo()" >
+
+	<!-- Navigation -->
+	<nav class="site-navigation">
+		<div class="site-navigation-inner site-container">
+			<img src="./images/site-logo.png" alt="site logo">
+			
+			
+			<div id="opciones" class="main-navigation">
+				<ul class="main-navigation__ul">
+					<li><a href="principalUserAdmin.html">Catálogo</a></li>
+					<li><a href="bibliotecaAdmin.html">Mi Biblioteca</a></li>
+					<li><a href="perfilAdmin.html">Perfil</a></li>
+					<li><a href="cargaMasiva.html">Carga Masiva</a></li>
+					<li><a href="CRUD.html">CRUD de Videojuegos</a></li>
+					<li><a href="CRUDReportes.html">Generar Reportes</a></li>
+					<li><a href="crearAdmin.html">Crear Usuario</a></li>
+				</ul>
+			</div>
+			<div id="myBtn" class="burger-container" onclick="myFunction(this)">
+				<div class="bar1"></div>
+				<div class="bar2"></div>
+				<div class="bar3"></div>
+				<br><a href="login.html" >Cerrar Sesión</a></br>
+			</div>
+			
+			<script>
+				function myFunction(x) {
+					x.classList.toggle("change");
+				}
+			</script>
+
+		</div>
+	</nav>
+	<!-- Navigation end -->
+
+	<!-- Top banner -->
+	<section class="fh5co-top-banner">
+		<div id="bannerJuego" class="top-banner__inner site-container">
+
+			
+		</div>
+	</section>
+	<!-- Top banner end -->
+
+	
+	<!-- TABLA JUEGO INDIVIDUAL -->
+	<section class="fh5co-books">
+		<div id="titulo"class="site-container">
+						
+		</div>
+		<h2 class="universal-h2 universal-h2-bckg">Datos Juego</h2>
+			<div class="site-container2">
+				<table>
+					<thead>
+						<tr>
+							 <th>Parámetro</th>
+							 <th width=1150>Valor</th>
+							 
+						</tr>
+					</thead>
+					<tbody id="filas">
+					
+					</tbody>
+				</table>
+			</div>
+	</section>
+	<!-- FIN TABLA JUEGO INDIVIDUAL -->
+	
+	<!-- Footer -->
+	<footer class="site-footer">
+
+		<div class="footer-bottom">
+			<div class="site-container footer-bottom-inner">
+				<p>© 2020 Author | Design by <a href="https://google.com" target="_blank">Jonathan Calo</a> | All rights Reserved.</p>
+				<div class="footer-bottom__img">
+					<img src="./images/footer-mastercard.png" alt="footer image">
+					<img src="./images/footer-paypal.png" alt="footer image">
+					<img src="./images/footer-visa.png" alt="footer image">
+					<img src="./images/footer-fedex.png" alt="footer image">
+					<img src="./images/footer-dhl.png" alt="footer image">
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- Footer end -->
+
+	<!-- Scripts -->
+	<script src="js/slick.min.js"></script>
+	<script src="js/main.js"></script>
+	<!-- FIN Scripts -->
+
+	<!-- CARGAR JUEGO -->
+	<script>
+		function CargarInfo(){
+
+			
+			const queryString = window.location.search;
+			const urlParams = new URLSearchParams(queryString);
+			const id_juego = urlParams.get('id');
+
+			const idUsuario = sessionStorage.getItem('id_usuario')
+
+			fetch('https://backend-proyecto2-201213330.herokuapp.com/obtener-juego?id='+id_juego,{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(res => res.json())
+			.catch(err =>{
+				console.error('Error:', err)
+				alert('Ocurrió un error, ver la consola')
+			})
+			.then(response =>{
+				console.log(response)
+				var mi_Juego = response['data'];
+				var tabla_juego = document.querySelector('#filas')
+				tabla_juego.innerHTML += `	<tr>
+												<td>ID</td>
+												<td>${mi_Juego.id}</td>
+											</tr>
+											<tr>
+												<td>Nombre</td>
+												<td>${mi_Juego.nombre}</td>
+											</tr>
+											<tr>
+												<td>Año</td>
+												<td>${mi_Juego.año}</td>
+											</tr>
+											<tr>
+												<td>Precio (Q.)</td>
+												<td>${mi_Juego.precio}</td>
+											</tr>
+											<tr>
+												<td>Categoría 1</td>
+												<td>${mi_Juego.categoria1}</td>
+											</tr>
+											<tr>
+												<td>Categoría 2</td>
+												<td>${mi_Juego.categoria2}</td>
+											</tr>
+											<tr>
+												<td>Categoría 3</td>
+												<td>${mi_Juego.categoria3}</td>
+											</tr>
+											<tr>
+												<td>Foto (url)</td>
+												<td>${mi_Juego.foto}</td>
+											</tr>
+											<tr>
+												<td>Foto</td>
+												<td><img src="${mi_Juego.foto}" width="115" height="150"></td>
+											</tr>
+											<tr>
+												<td>Banner (url)</td>
+												<td>${mi_Juego.banner}</td>
+											</tr>
+											<tr>
+												<td>Banner</td>
+												<td><img src="${mi_Juego.banner}" width="250" height="100"></td>
+											</tr>
+											<tr>
+												<td>Descripción</td>
+												<td>${mi_Juego.descripcion}</td>
+											</tr>`
+			})
+		}
+	</script>
+	<!-- FIN CARGAR JUEGO -->
+
+</body>
+</html>

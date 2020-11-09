@@ -1,9 +1,7 @@
 <!doctype html>
 <!--
-	Author by FreeHTML5.co
-	Twitter: https://twitter.com/fh5co
-	Facebook: https://fb.com/fh5co
-	URL: https://freehtml5.co
+	Author Jonathan Calo
+	Carnet 201213330
 -->
 <html lang="en">
 <head>
@@ -60,23 +58,22 @@
 	<!-- Top banner end -->
 
 	
-	<!-- Juegos Disponibles -->
+	<!-- TITULO -->
 	<section class="fh5co-books">
 		<div id="titulo"class="site-container">
 						
 		</div>
 	</section>
-	<!-- juegos end -->
+	<!-- TITULO END -->
 
-	<!-- About me -->
+	<!-- Ficha juego -->
 	<section class="fh5co-about-me">
 		<div id="fichaJuego" class="about-me-inner site-container">
 		</div>
 		<div class="about-me-bckg"></div>
 		
 	</section>
-	
-	<!-- About me end -->
+	<!-- FIN Ficha juego -->
 
 
 	<!-- Comentarios -->
@@ -99,7 +96,7 @@
 
 		<div class="footer-bottom">
 			<div class="site-container footer-bottom-inner">
-				<p>© 2019 Author | Design by <a href="https://freehtml5.co/" target="_blank">freehtml5.co</a> | All rights Reserved.</p>
+				<p>© 2020 Author | Design by <a href="https://google.com" target="_blank">Jonathan Calo</a> | All rights Reserved.</p>
 				<div class="footer-bottom__img">
 					<img src="./images/footer-mastercard.png" alt="footer image">
 					<img src="./images/footer-paypal.png" alt="footer image">
@@ -113,10 +110,11 @@
 	<!-- Footer end -->
 
 	<!-- Scripts -->
-	<script src="js/jquery.min.js"></script>
 	<script src="js/slick.min.js"></script>
 	<script src="js/main.js"></script>
+	<!-- FIN Scripts -->
 
+	<!-- Script OBTENER DATOS Y COMENTARIOS JUEGO -->
 	<script>
 		function CargarInfo(){
 			const queryString = window.location.search;
@@ -193,7 +191,7 @@
 				seccionComentarios.innerHTML += `	<div class="single-blog">
 														<div class="single-blog__text">
 															<h4>${element.nameUser}</h4>
-															<span>${element.fecha}</span>
+															<span>Fecha: ${element.fecha}</span>
 															<p>${element.cadena}</p>
 														</div>
 													</div>`
@@ -218,89 +216,8 @@
 				}
 			}
 		}
-
-		
 	</script>
-
-	<script>
-		const idUsuario = sessionStorage.getItem('id_usuario')
-		const id_game = sessionStorage.getItem('id_juego')
-		
-		$("#fichaJuego").submit(function(event){
-			//Evitamos que el formulario se envíe de manera tradicional
-			event.preventDefault();
-			var $form = $(this),
-			url ='https://backend-proyecto2-201213330.herokuapp.com/agregar-a-biblioteca';
-
-			var posting = $.post(url,{
-				id_usuario : idUsuario,
-				id_juego : id_game
-			})
-
-			posting.done(function(data){
-				var content = $(data).find("#content");
-				var respuesta = content['prevObject'][0]
-
-				switch(respuesta['estado_agregado']){
-					case 0:
-						window.alert("Ya posees este juego en tu biblioteca");
-						break;
-					case 1:
-						window.alert("Juego agregado a tu biblioteca exitosamente");
-						break;
-					case 2:
-						window.alert("El usuario no existe");
-						break;
-					default:
-						window.alert("Error, contacte con administrador");
-				}
-			})
-		})
-	</script>
-
-<script>
-	//const idUsuario = sessionStorage.getItem('id_usuario')
-	//const id_game = sessionStorage.getItem('id_juego')
-	
-	$("#areaComentarios").submit(function(event2){
-		//Evitamos que el formulario se envíe de manera tradicional
-		event2.preventDefault();
-		var $form = $(this),
-		comentarioJuego = $form.find("textarea[name='contenido']").val(),
-		fecha = new Date(),
-		url ='https://backend-proyecto2-201213330.herokuapp.com/agregar-comentario';
-
-		
-
-		var posting = $.post(url,{
-			id_usuario : idUsuario,
-			id_juego : id_game,
-			comentario : comentarioJuego,
-			fecha : (fecha.getDate() + "/" + (fecha.getMonth() +1) + "/" + fecha.getFullYear())
-		})
-
-		
-
-		posting.done(function(data){
-			var content = $(data).find("#content");
-			var respuesta = content['prevObject'][0]
-
-			switch(respuesta['comentario_agregado']){
-				case 0:
-					window.alert("no se agregó");
-					
-					break;
-				case 1:
-					window.alert("si se agrego");
-					window.location.reload();
-					break;
-				default:
-					window.alert("Error en comentario");
-					
-			}
-		})
-	})
-</script>
+	<!-- FIN Script OBTENER DATOS Y COMENTARIOS JUEGO -->
 
 </body>
 </html>

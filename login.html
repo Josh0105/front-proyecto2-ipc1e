@@ -1,9 +1,7 @@
 <!doctype html>
 <!--
-	Author by FreeHTML5.co
-	Twitter: https://twitter.com/fh5co
-	Facebook: https://fb.com/fh5co
-	URL: https://freehtml5.co
+	Author Jonathan Calo
+	Carnet 201213330
 -->
 <html lang="en">
 <head>
@@ -47,8 +45,8 @@
 	<!-- Navigation end -->
 
 	
-	<!-- Footer -->
-	<footer class="site-footer">
+	<!-- Footer y area de logueo-->
+	<footer class="site-footerlog">
 		<div class="site-container">
 			<div class="footer-inner">
 				<div class="footer-contact-form">
@@ -86,12 +84,12 @@
 			</div>
 		</div>
 	</footer>
-	<!-- Footer end -->
+	<!-- FIN Footer y area de logueo-->
 
 	<!-- Scripts -->
-	<script src="js/jquery.min.js"></script>
 	<script src="js/slick.min.js"></script>
 	<script src="js/main.js"></script>
+	<!-- FIN Scripts -->
 
 	<!-- CODIGO PARA LOGIN -->
 	<script>
@@ -116,11 +114,11 @@
 				
 				if (respuesta['estado']== 1){
 					if(respuesta['admin']==true){
-						window.alert("Usuario Administrador")
+						//window.alert("Usuario Administrador")
 						sessionStorage.setItem('admin',1)
 					}else{
 						sessionStorage.setItem('admin',0)
-						window.alert("Usuario Estandar")
+						//window.alert("Usuario Estandar")
 					}
 
 					sessionStorage.setItem('id_usuario',respuesta['id'])
@@ -136,6 +134,9 @@
 
 		});
 	</script>
+	<!-- FIN CODIGO PARA LOGIN -->
+
+	<!-- LIMPIEZA DE FORMULARIO -->
 	<script>
 		function clearForm(oForm) {
 			var elements = oForm.elements;
@@ -166,8 +167,7 @@
 			}
 		}
 	</script>
-
-	
+	<!-- FIN LIMPIEZA DE FORMULARIO -->
 
 </body>
 </html>

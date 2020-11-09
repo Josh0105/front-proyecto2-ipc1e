@@ -1,9 +1,7 @@
 <!doctype html>
 <!--
-	Author by FreeHTML5.co
-	Twitter: https://twitter.com/fh5co
-	Facebook: https://fb.com/fh5co
-	URL: https://freehtml5.co
+	Author Jonathan Calo
+	Carnet 201213330
 -->
 <html lang="en">
 <head>
@@ -28,6 +26,7 @@
 				<ul class="main-navigation__ul">
 					<li><a href="principal.html">Catálogo</a></li>
 					<li><a href="login.html">LogIn</a></li>
+					<li><a href="registro.html">Registrar Usuario</a></li>
 				</ul>
 			</div>
 			<div id="myBtn" class="burger-container" onclick="myFunction(this)">
@@ -46,8 +45,8 @@
 	<!-- Navigation end -->
 
 	
-	<!-- Footer -->
-	<footer class="site-footer">
+	<!-- REGISTRO -->
+	<footer class="site-footerlog">
 		<div class="site-container">
 			<div class="footer-inner">
 				<div class="footer-contact-form">
@@ -92,12 +91,12 @@
 			</div>
 		</div>
 	</footer>
-	<!-- Footer end -->
+	<!-- FIN REGISTRO -->
 
 	<!-- Scripts -->
-	<script src="js/jquery.min.js"></script>
 	<script src="js/slick.min.js"></script>
 	<script src="js/main.js"></script>
+	<!-- FIN Scripts -->
 
 	<!-- CODIGO PARA REGISTRO -->
 	<script>
@@ -114,8 +113,6 @@
 			passw2 = $form.find("input[name='confirm_passw']").val(),
 			url ='https://backend-proyecto2-201213330.herokuapp.com/registro';
 
-			
-
 			var posting = $.post(url,{
 				nombre : name,
 				apellido : lastName,
@@ -127,8 +124,6 @@
 			posting.done(function(data){
 				var content = $(data).find("#content");
 				var respuesta = content['prevObject'][0]
-				
-
 				
 				switch(respuesta['estado_creacion']){
 					case 1:
@@ -153,18 +148,14 @@
 					default:
 						window.alert("Error, contacte con administrador");
 				}
-
-
-				
-					
 			})
 
 		});
 	</script>
+	<!-- FIN CODIGO PARA REGISTRO -->
 
 
-
-	
+	<!-- LIMPIEZA DE FORMULARIO -->
 	<script>
 		function clearForm(oForm) {
 			var elements = oForm.elements;
@@ -195,6 +186,7 @@
 			}
 		}
 	</script>
+	<!-- FIN LIMPIEZA DE FORMULARIO -->
 
 </body>
 </html>

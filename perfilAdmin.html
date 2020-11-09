@@ -1,9 +1,7 @@
 <!doctype html>
 <!--
-	Author by FreeHTML5.co
-	Twitter: https://twitter.com/fh5co
-	Facebook: https://fb.com/fh5co
-	URL: https://freehtml5.co
+	Author Jonathan Calo
+	Carnet 201213330
 -->
 <html lang="en">
 <head>
@@ -20,6 +18,8 @@
 </head>
 <body onload="CargarInfo()">
 
+	
+
 	<!-- Navigation -->
 	<nav class="site-navigation">
 		<div class="site-navigation-inner site-container">
@@ -31,6 +31,7 @@
 				<div class="bar1"></div>
 				<div class="bar2"></div>
 				<div class="bar3"></div>
+				<br><a href="login.html" >Cerrar Sesión</a></br>
 			</div>
 			<script>
 				function myFunction(x) {
@@ -42,8 +43,16 @@
 	</nav>
 	<!-- Navigation end -->
 
-	
-	<!-- Footer -->
+	<!-- Top banner -->
+	<section class="fh5co-top-banner">
+		<div class="top-banner__inner site-container">
+						
+		</div>
+	</section>
+	<!-- Top banner end -->
+
+
+	<!-- Footer Y REGISTRO-->
 	<footer class="site-footer">
 		<div class="site-container">
 			<div class="footer-inner">
@@ -57,7 +66,7 @@
 		</div>
 		<div class="footer-bottom">
 			<div class="site-container footer-bottom-inner">
-				<p>© 2020 GameCenter | Design by <a href="https://google.com/" target="_blank">Jonathan Calo</a> | All rights Reserved.</p>
+				<p>© 2020 Author | Design by <a href="https://google.com" target="_blank">Jonathan Calo</a> | All rights Reserved.</p>
 				<div class="footer-bottom__img">
 					<img src="./images/footer-mastercard.png" alt="footer image">
 					<img src="./images/footer-paypal.png" alt="footer image">
@@ -68,14 +77,14 @@
 			</div>
 		</div>
 	</footer>
-	<!-- Footer end -->
+	<!-- Footer Y REGISTRO FIN-->
 
 	<!-- Scripts -->
-	<script src="js/jquery.min.js"></script>
 	<script src="js/slick.min.js"></script>
 	<script src="js/main.js"></script>
+	<!-- FIN Scripts -->
 
-
+	<!-- CODIGO CARGAR DATOS USUARIO-->
 	<script>
 		function CargarInfo(){
 
@@ -87,8 +96,8 @@
 												<li><a href="bibliotecaAdmin.html">Mi Biblioteca</a></li>
 												<li><a href="perfilAdmin.html">Perfil</a></li>
 												<li><a href="cargaMasiva.html">Carga Masiva</a></li>
-												<li><a href="#">CRUD de Videojuegos</a></li>
-												<li><a href="#">Generar Reportes</a></li>
+												<li><a href="CRUD.html">CRUD de Videojuegos</a></li>
+												<li><a href="CRUDReportes.html">Generar Reportes</a></li>
 												<li><a href="crearAdmin.html">Crear Usuario</a></li>
 											</ul>`
 			}else{
@@ -140,15 +149,9 @@
 												<a href="principalUserAdmin.html" class="submit-button" >Cancelar</a>`
 				
 			})
-
-			
-
-			
 		}
-
-		
-
 	</script>
+	<!-- FIN CODIGO CARGAR DATOS USUARIO-->
 
 
 
@@ -168,8 +171,6 @@
 			passw2 = $form.find("input[name='confirm_passw']").val(),
 			url ='https://backend-proyecto2-201213330.herokuapp.com/modificar-usuario';
 
-			
-
 			var posting = $.post(url,{
 				id_usuario : idUsuario,
 				nombre : name,
@@ -182,8 +183,6 @@
 			posting.done(function(data){
 				var content = $(data).find("#content");
 				var respuesta = content['prevObject'][0]
-				
-
 				
 				switch(respuesta['estado_creacion']){
 					case 1:
@@ -210,18 +209,13 @@
 					default:
 						window.alert("Error, contacte con administrador");
 				}
-
-
-				
-					
 			})
-
 		});
 	</script>
+	<!-- CODIGO PARA CAMBIAR LOS DATOS -->
 
 
-
-	
+	<!-- LIMPIEZA FORMULARIO -->	
 	<script>
 		function clearForm(oForm) {
 			var elements = oForm.elements;
@@ -252,6 +246,7 @@
 			}
 		}
 	</script>
+	<!-- FIN LIMPIEZA FORMULARIO -->
 
 </body>
 </html>

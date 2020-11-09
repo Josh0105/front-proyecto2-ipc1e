@@ -1,9 +1,7 @@
 <!doctype html>
 <!--
-	Author by FreeHTML5.co
-	Twitter: https://twitter.com/fh5co
-	Facebook: https://fb.com/fh5co
-	URL: https://freehtml5.co
+	Author Jonathan Calo
+	Carnet 201213330
 -->
 <html lang="en">
 <head>
@@ -64,7 +62,7 @@
 	</section>
 	<!-- juegos end -->
 
-	<!-- About me -->
+	<!-- FICHA JUEGO -->
 	<section class="fh5co-about-me">
 		<div id="fichaJuego" class="about-me-inner site-container">
 		</div>
@@ -72,7 +70,7 @@
 		
 	</section>
 	
-	<!-- About me end -->
+	<!-- FICHA JUEGO -->
 
 
 	<!-- Comentarios -->
@@ -101,7 +99,7 @@
 
 		<div class="footer-bottom">
 			<div class="site-container footer-bottom-inner">
-				<p>© 2019 Author | Design by <a href="https://freehtml5.co/" target="_blank">freehtml5.co</a> | All rights Reserved.</p>
+				<p>© 2020 Author | Design by <a href="https://google.com" target="_blank">Jonathan Calo</a> | All rights Reserved.</p>
 				<div class="footer-bottom__img">
 					<img src="./images/footer-mastercard.png" alt="footer image">
 					<img src="./images/footer-paypal.png" alt="footer image">
@@ -115,10 +113,11 @@
 	<!-- Footer end -->
 
 	<!-- Scripts -->
-	<script src="js/jquery.min.js"></script>
 	<script src="js/slick.min.js"></script>
 	<script src="js/main.js"></script>
+	<!-- Scripts -->
 
+	<!-- CODIGO MENU Y OBTENER JUEGO Y OBTENER COMENTARIOS -->
 	<script>
 		function CargarInfo(){
 
@@ -130,8 +129,8 @@
 												<li><a href="bibliotecaAdmin.html">Mi Biblioteca</a></li>
 												<li><a href="perfilAdmin.html">Perfil</a></li>
 												<li><a href="cargaMasiva.html">Carga Masiva</a></li>
-												<li><a href="#">CRUD de Videojuegos</a></li>
-												<li><a href="#">Generar Reportes</a></li>
+												<li><a href="CRUD.html">CRUD de Videojuegos</a></li>
+												<li><a href="CRUDReportes.html">Generar Reportes</a></li>
 												<li><a href="crearAdmin.html">Crear Usuario</a></li>
 											</ul>`
 			}else{
@@ -164,7 +163,7 @@
 				var mi_Juego = response['data'];
 				var baner_Juego = document.querySelector('#bannerJuego')
 				baner_Juego.innerHTML += `	<div class="top-banner__image">
-												<img src="${mi_Juego.banner}" width="1100" height="350" alt="author image">
+												<img src="${mi_Juego.banner}" width="1200" height="350" alt="author image">
 											</div>`
 				
 				var titulo_juego = document.querySelector('#titulo')
@@ -221,7 +220,7 @@
 				seccionComentarios.innerHTML += `	<div class="single-blog">
 														<div class="single-blog__text">
 															<h4>${element.nameUser}</h4>
-															<span>${element.fecha}</span>
+															<span>Fecha: ${element.fecha}</span>
 															<p>${element.cadena}</p>
 														</div>
 													</div>`
@@ -246,10 +245,10 @@
 				}
 			}
 		}
-
-		
 	</script>
+	<!-- FIN CODIGO MENU Y OBTENER JUEGO Y OBTENER COMENTARIOS -->
 
+	<!-- CODIGO AGREGAR A BIBLIOTECA -->
 	<script>
 		const queryString = window.location.search;
 		const urlParams = new URLSearchParams(queryString);
@@ -289,49 +288,52 @@
 			})
 		})
 	</script>
+	<!-- FIN CODIGO AGREGAR A BIBLIOTECA -->
 
-<script>
-	
-	$("#areaComentarios").submit(function(event2){
-		//Evitamos que el formulario se envíe de manera tradicional
-		event2.preventDefault();
-		var $form = $(this),
-		comentarioJuego = $form.find("textarea[name='contenido']").val(),
-		fecha = new Date(),
-		url ='https://backend-proyecto2-201213330.herokuapp.com/agregar-comentario';
-
+	<!-- CODIGO AGREGAR COMENTARIO -->
+	<script>
 		
+		$("#areaComentarios").submit(function(event2){
+			//Evitamos que el formulario se envíe de manera tradicional
+			event2.preventDefault();
+			var $form = $(this),
+			comentarioJuego = $form.find("textarea[name='contenido']").val(),
+			fecha = new Date(),
+			url ='https://backend-proyecto2-201213330.herokuapp.com/agregar-comentario';
 
-		var posting = $.post(url,{
-			id_usuario : idUsuario,
-			id_juego : id_game,
-			comentario : comentarioJuego,
-			fecha : ("Fecha: " + fecha.getDate() + "/" + (fecha.getMonth() +1) + "/" + fecha.getFullYear() + " Hora: " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds())
+			
+
+			var posting = $.post(url,{
+				id_usuario : idUsuario,
+				id_juego : id_game,
+				comentario : comentarioJuego,
+				fecha : (fecha.getDate() + "/" + (fecha.getMonth() +1) + "/" + fecha.getFullYear() + " Hora: " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds())
+			})
+
+			
+
+			posting.done(function(data){
+				var content = $(data).find("#content");
+				var respuesta = content['prevObject'][0]
+
+				switch(respuesta['comentario_agregado']){
+					case 0:
+						window.alert("no se agregó");
+						
+						break;
+					case 1:
+						console.log("se segregó comentario a juego :"+id_game);
+						window.alert("si se agrego");
+						window.location.reload();
+						break;
+					default:
+						window.alert("Error en comentario");
+						
+				}
+			})
 		})
-
-		
-
-		posting.done(function(data){
-			var content = $(data).find("#content");
-			var respuesta = content['prevObject'][0]
-
-			switch(respuesta['comentario_agregado']){
-				case 0:
-					window.alert("no se agregó");
-					
-					break;
-				case 1:
-					console.log("se segregó comentario a juego :"+id_game);
-					window.alert("si se agrego");
-					window.location.reload();
-					break;
-				default:
-					window.alert("Error en comentario");
-					
-			}
-		})
-	})
-</script>
+	</script>
+	<!-- FIN CODIGO AGREGAR COMENTARIO -->
 
 </body>
 </html>

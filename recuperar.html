@@ -1,9 +1,7 @@
 <!doctype html>
 <!--
-	Author by FreeHTML5.co
-	Twitter: https://twitter.com/fh5co
-	Facebook: https://fb.com/fh5co
-	URL: https://freehtml5.co
+	Author Jonathan Calo
+	Carnet 201213330
 -->
 <html lang="en">
 <head>
@@ -47,8 +45,8 @@
 	<!-- Navigation end -->
 
 	
-	<!-- Footer -->
-	<footer class="site-footer">
+	<!-- Footer y recuperacion-->
+	<footer class="site-footerlog">
 		<div class="site-container">
 			<div class="footer-inner">
 				<div class="footer-contact-form">
@@ -79,14 +77,14 @@
 			</div>
 		</div>
 	</footer>
-	<!-- Footer end -->
+	<!-- fin Footer y recuperacion-->
 
 	<!-- Scripts -->
-	<script src="js/jquery.min.js"></script>
 	<script src="js/slick.min.js"></script>
 	<script src="js/main.js"></script>
+	<!-- FIN Scripts -->
 
-	<!-- CODIGO PARA LOGIN -->
+	<!-- CODIGO PARA RECUPERAR CONTRASEÑA -->
 	<script>
 		$("#recuperarForm").submit(function(event){
 			//Evitamos que el formulario se envíe de manera tradicional
@@ -115,9 +113,11 @@
 				}
 					
 			})
-
 		});
 	</script>
+	<!-- FIN CODIGO PARA RECUPERAR CONTRASEÑA -->
+
+	<!-- LIMPIEZA DE FORMULARIO -->
 	<script>
 		function clearForm(oForm) {
 			var elements = oForm.elements;
@@ -148,6 +148,7 @@
 			}
 		}
 	</script>
+	<!-- FIN LIMPIEZA DE FORMULARIO -->
 
 </body>
 </html>

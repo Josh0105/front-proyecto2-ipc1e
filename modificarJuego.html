@@ -1,0 +1,217 @@
+<!doctype html>
+<!--
+	Author Jonathan Calo
+	Carnet 201213330
+-->
+<html lang="en">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/slick.css">
+	<title>GameStore</title>
+
+	<!-- Agregamos JQUERY -->
+	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+</head>
+<body onload="CargarInfo()">
+
+	<!-- Navigation -->
+	<nav class="site-navigation">
+		<div class="site-navigation-inner site-container">
+			<img src="./images/site-logo.png" alt="site logo">
+			<div class="main-navigation">
+				<ul class="main-navigation__ul">
+					<li><a href="principalUserAdmin.html">Catálogo</a></li>
+					<li><a href="bibliotecaAdmin.html">Mi Biblioteca</a></li>
+					<li><a href="perfilAdmin.html">Perfil</a></li>
+					<li><a href="cargaMasiva.html">Carga Masiva</a></li>
+					<li><a href="CRUD.html">CRUD de Videojuegos</a></li>
+					<li><a href="CRUDReportes.html">Generar Reportes</a></li>
+					<li><a href="crearAdmin.html">Crear Usuario</a></li>					
+				</ul>
+			</div>
+			<div id="myBtn" class="burger-container" onclick="myFunction(this)">
+				<div class="bar1"></div>
+				<div class="bar2"></div>
+				<div class="bar3"></div>
+				<br><a href="login.html" >Cerrar Sesión</a></br>
+			</div>
+			<script>
+				function myFunction(x) {
+					x.classList.toggle("change");
+				}
+			</script>
+
+		</div>
+	</nav>
+	<!-- Navigation end -->
+
+
+	<!-- Top banner -->
+	<section class="fh5co-top-banner">
+		<div class="top-banner__inner site-container">
+						
+		</div>
+	</section>
+	<!-- Top banner end -->
+	
+	<!-- MODIFICACION -->
+	<footer class="site-footer">
+		<div class="site-container">
+			<div class="footer-inner">
+				<div class="footer-contact-form">
+					<h6>Modificar Juego</h6>
+					<form id="RegistroForm" class="contact-form">
+
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<div class="site-container footer-bottom-inner">
+				<p>© 2020 Author | Design by <a href="https://google.com" target="_blank">Jonathan Calo</a> | All rights Reserved.</p>
+				<div class="footer-bottom__img">
+					<img src="./images/footer-mastercard.png" alt="footer image">
+					<img src="./images/footer-paypal.png" alt="footer image">
+					<img src="./images/footer-visa.png" alt="footer image">
+					<img src="./images/footer-fedex.png" alt="footer image">
+					<img src="./images/footer-dhl.png" alt="footer image">
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- Footer end -->
+
+	<!-- Scripts -->
+	<script src="js/slick.min.js"></script>
+	<script src="js/main.js"></script>
+	<!-- fin Scripts -->
+
+	<!-- CODIGO CARGAR DATOS JUEGO -->
+	<script>
+		const queryString = window.location.search;
+		const urlParams = new URLSearchParams(queryString);
+		const id_juego = urlParams.get('id');
+
+		function CargarInfo(){
+
+			const idUsuario = sessionStorage.getItem('id_usuario')
+
+			
+			fetch('https://backend-proyecto2-201213330.herokuapp.com/obtener-juego?id='+id_juego, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(res => res.json())
+			.catch(err =>{
+				console.log(err)
+				alert('Ocurrio un error al momento de obtener los datos del usuario')
+			}).then(response =>{
+				console.log(response);
+				var datos_juegos = response.data;
+				console.log(datos_juegos);
+				var formulariolleno = document.querySelector('#RegistroForm')
+
+				formulariolleno.innerHTML += `	<h5>Nombre</h5>
+												<div class="contact-form__input">
+													<input name="name" type="text" placeholder="Nombre del Juego" value="${datos_juegos.nombre}">
+												</div>
+												<h5>Año de publicación</h5>
+												<div class="contact-form__input">
+													<input name="anio_juego" type="text" placeholder="AAAA" value="${datos_juegos.año}">
+												</div>
+												<h5>Precio en quetzales (valor)</h5>
+												<div class="contact-form__input">
+													<input name="precio_juego" type="text" placeholder="Ejemplo: 500.00" value="${datos_juegos.precio}">
+												</div>
+												<h5>Categoría 1 (opcional)</h5>
+												<div class="contact-form__input">
+													<input name="categoria1" type="text" placeholder="Acción, Aventura, Arcade, etc..." value="${datos_juegos.categoria1}">
+												</div>
+												<h5>Categoría 2 (opcional)</h5>
+												<div class="contact-form__input">
+													<input name="categoria2" type="text" placeholder="Acción, Aventura, Arcade, etc..." value="${datos_juegos.categoria2}">
+												</div>
+												<h5>Categoría 3 (opcional)</h5>
+												<div class="contact-form__input">
+													<input name="categoria3" type="text" placeholder="Acción, Aventura, Arcade, etc..." value="${datos_juegos.categoria3}">
+												</div>
+												<h5>Foto</h5>
+												<div class="contact-form__input">
+													<input name="fotoJuego" type="text" placeholder="url" value="${datos_juegos.foto}">
+												</div>
+												<h5>Banner</h5>
+												<div class="contact-form__input">
+													<input name="bannerJuego" type="text" placeholder="url" value="${datos_juegos.banner}">
+												</div>
+												<h5>Descripción</h5>
+												<div class="contact-form__input">
+													<textarea name="description" type="text" placeholder="Descripción del juego..." >${datos_juegos.descripcion}</textarea>
+												</div>
+												<input type="submit" name="submit" value="Aplicar Cambio" class="submit-button">
+												<a href="CRUD.html" class="submit-button" >Cancelar</a>`
+				
+			})
+		}
+	</script>
+	<!-- FIN CODIGO CARGAR DATOS JUEGO -->
+
+	<!-- CODIGO PARA MODIFICAR -->
+	<script>
+		$("#RegistroForm").submit(function(event){
+			//Evitamos que el formulario se envíe de manera tradicional
+			event.preventDefault();
+			//OBTENEMOS VALORES DEL FORMULARIO
+
+			var $form = $(this),
+			nameJuego = $form.find("input[name='name']").val(),
+			anioJuego = $form.find("input[name='anio_juego']").val(),
+			precioJuego = $form.find("input[name='precio_juego']").val(),
+			categoria1 = $form.find("input[name='categoria1']").val(),
+			categoria2 = $form.find("input[name='categoria2']").val(),
+			categoria3 = $form.find("input[name='categoria3']").val(),
+			fotoJuego = $form.find("input[name='fotoJuego']").val(),
+			bannerJuego = $form.find("input[name='bannerJuego']").val(),
+			descriptionJuego = $form.find("textarea[name='description']").val(),
+			url ='https://backend-proyecto2-201213330.herokuapp.com/modificar-juego';
+
+			if(nameJuego !="" && anioJuego != "" && precioJuego != "" && fotoJuego != "" && bannerJuego != "" && descriptionJuego != ""){
+				
+				var posting = $.post(url,{
+				id_juego : id_juego,
+				nombre_juego : nameJuego,
+				anio : anioJuego,
+				precio : precioJuego,
+				categoria_1 : categoria1,
+				categoria_2 : categoria2,
+				categoria_3 : categoria3,
+				foto : fotoJuego,
+				banner : bannerJuego,
+				descripcion : descriptionJuego
+				})
+
+				posting.done(function(data){
+					var content = $(data).find("#content");
+					var respuesta = content['prevObject'][0]
+				
+					if(respuesta['estado_creacion'] == true){
+						window.alert("Juego modificado con éxito");
+						window.location.href = "principalUserAdmin.html";
+					}else{
+						window.alert("Error al modificar el juego");
+					}
+				})
+			}else {
+				window.alert("Existen valores obligatorios sin llenar");
+			}
+		});
+	</script>
+	<!-- CODIGO PARA MODIFICAR -->
+
+
+</body>
+</html>

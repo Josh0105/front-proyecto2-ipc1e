@@ -58,42 +58,58 @@
 	</section>
 	<!-- Top banner end -->
 	
-	<!-- CREAR USUARIO -->
+	<!-- CREAR JUEGO -->
 	<footer class="site-footer">
 		<div class="site-container">
 			<div class="footer-inner">
 				<div class="footer-contact-form">
-					<h6>Crear Usuario Administrador</h6>
+					<h6>Crear Juego Nuevo</h6>
 					<form id="RegistroForm" class="contact-form">
 						<h5>Nombre</h5>
 						<div class="contact-form__input">
-							<input name="name" type="text" placeholder="Nombre">
+							<input name="name" type="text" placeholder="Nombre del Juego">
 						</div>
-						<h5>Apellido</h5>
+						<h5>Año de publicación</h5>
 						<div class="contact-form__input">
-							<input name="lastName" type="text" placeholder="Apellido">
+							<input name="anio_juego" type="text" placeholder="AAAA">
 						</div>
-						<h5>Nombre de Usuario</h5>
+						<h5>Precio en quetzales (valor)</h5>
 						<div class="contact-form__input">
-							<input name="user_name" type="text" placeholder="Usuario">
+							<input name="precio_juego" type="text" placeholder="Ejemplo: 500.00">
 						</div>
-						<h5>Contraseña</h5>
+						<h5>Categoría 1 (opcional)</h5>
 						<div class="contact-form__input">
-							<input name="passw" type="password" placeholder="Contraseña">
+							<input name="categoria1" type="text" placeholder="Acción, Aventura, Arcade, etc...">
 						</div>
-						<h5>Confirmar contraseña</h5>
+						<h5>Categoría 2 (opcional)</h5>
 						<div class="contact-form__input">
-							<input name="confirm_passw" type="password" placeholder="Confirmar contraseña">
+							<input name="categoria2" type="text" placeholder="Acción, Aventura, Arcade, etc...">
+						</div>
+						<h5>Categoría 3 (opcional)</h5>
+						<div class="contact-form__input">
+							<input name="categoria3" type="text" placeholder="Acción, Aventura, Arcade, etc...">
+						</div>
+						<h5>Foto</h5>
+						<div class="contact-form__input">
+							<input name="fotoJuego" type="text" placeholder="url">
+						</div>
+						<h5>Banner</h5>
+						<div class="contact-form__input">
+							<input name="bannerJuego" type="text" placeholder="url">
+						</div>
+						<h5>Descripción</h5>
+						<div class="contact-form__input">
+							<input name="description" type="text" placeholder="Descripción del juego...">
 						</div>
 						<input type="submit" name="submit" value="Registrar" class="submit-button">
-						<a href="principalUserAdmin.html" class="submit-button" >Cancelar</a>
+						<a href="CRUD.html" class="submit-button" >Cancelar</a>
 					</form>
 				</div>
 			</div>
 		</div>
 		<div class="footer-bottom">
 			<div class="site-container footer-bottom-inner">
-				<p>© 2020 GameCenter | Design by <a href="https://google.com/" target="_blank">Jonathan Calo</a> | All rights Reserved.</p>
+				<p>© 2020 Author | Design by <a href="https://google.com" target="_blank">Jonathan Calo</a> | All rights Reserved.</p>
 				<div class="footer-bottom__img">
 					<img src="./images/footer-mastercard.png" alt="footer image">
 					<img src="./images/footer-paypal.png" alt="footer image">
@@ -104,7 +120,7 @@
 			</div>
 		</div>
 	</footer>
-	<!-- FIN CREAR USUARIO -->
+	<!-- CREAR JUEGO -->
 
 	<!-- Scripts -->
 	<script src="js/slick.min.js"></script>
@@ -119,86 +135,49 @@
 			//OBTENEMOS VALORES DEL FORMULARIO
 
 			var $form = $(this),
-			name = $form.find("input[name='name']").val(),
-			lastName = $form.find("input[name='lastName']").val(),
-			userName = $form.find("input[name='user_name']").val(),
-			passw = $form.find("input[name='passw']").val(),
-			passw2 = $form.find("input[name='confirm_passw']").val(),
-			url ='https://backend-proyecto2-201213330.herokuapp.com/registro-admin';
+			nameJuego = $form.find("input[name='name']").val(),
+			anioJuego = $form.find("input[name='anio_juego']").val(),
+			precioJuego = $form.find("input[name='precio_juego']").val(),
+			categoria1 = $form.find("input[name='categoria1']").val(),
+			categoria2 = $form.find("input[name='categoria2']").val(),
+			categoria3 = $form.find("input[name='categoria3']").val(),
+			fotoJuego = $form.find("input[name='fotoJuego']").val(),
+			bannerJuego = $form.find("input[name='bannerJuego']").val(),
+			descriptionJuego = $form.find("input[name='description']").val(),
+			url ='https://backend-proyecto2-201213330.herokuapp.com/nuevo-juego';
 
-			var posting = $.post(url,{
-				nombre : name,
-				apellido : lastName,
-				user_name : userName,
-				contrasena : passw,
-				contrasena2 : passw2
-			})
-
-			posting.done(function(data){
-				var content = $(data).find("#content");
-				var respuesta = content['prevObject'][0]
+			if(nameJuego !="" && anioJuego != "" && precioJuego != "" && fotoJuego != "" && bannerJuego != "" && descriptionJuego != ""){
 				
-				switch(respuesta['estado_creacion']){
-					case 1:
-						window.alert("Usuario Administrador creado exitosamente");
+				var posting = $.post(url,{
+				nombre_juego : nameJuego,
+				anio : anioJuego,
+				precio : precioJuego,
+				categoria_1 : categoria1,
+				categoria_2 : categoria2,
+				categoria_3 : categoria3,
+				foto : fotoJuego,
+				banner : bannerJuego,
+				descripcion : descriptionJuego
+				})
+
+				posting.done(function(data){
+					var content = $(data).find("#content");
+					var respuesta = content['prevObject'][0]
+				
+					if(respuesta['estado_creacion'] == true){
+						window.alert("Juego creado con éxito");
 						window.location.href = "principalUserAdmin.html";
-						break;
-					case 2:
-						window.alert("Nombre de usuario debe iniciar con una letra");
-						break;
-					case 3:
-						window.alert("Nombre de usuario solo puede llevar números o letras");
-						break;
-					case 4:
-						window.alert("Nombre de usuario ya existe");
-						break;
-					case 5:
-						window.alert("La contraseña no coincide");
-						break;
-					case 6:
-						window.alert("Existen datos sin llenar");
-						break;
-					default:
-						window.alert("Error, contacte con administrador");
-				}
-			})
+					}else{
+						window.alert("Error al crear el juego");
+					}
+				})
+			}else {
+				window.alert("Existen valores obligatorios sin llenar");
+			}
 		});
 	</script>
-	<!-- FIN ODIGO PARA REGISTRO -->
+	<!-- CODIGO PARA REGISTRO -->
 
-
-	<!-- LIMPIAR FOMULARIOS -->
-	<script>
-		function clearForm(oForm) {
-			var elements = oForm.elements;
-			oForm.reset();
-			for(i=0; i<elements.length; i++) {
-				field_type = elements[i].type.toLowerCase();
-				switch(field_type) {
-					case "text":
-					case "email":
-					case "password":
-					case "textarea":
-					case "hidden":
-	  					elements[i].value = "";
-	  					break;
-					case "radio":
-					case "checkbox":
-						if (elements[i].checked) {
-		  				elements[i].checked = false;
-	  					}
-	  					break;
-					case "select-one":
-					case "select-multi":
-	  					elements[i].selectedIndex = -1;
-	  					break;
-					default:
-	  					break;
-  				}
-			}
-		}
-	</script>
-	<!-- LIMPIAR FOMULARIOS -->
 
 </body>
 </html>

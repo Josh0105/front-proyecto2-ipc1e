@@ -1,9 +1,7 @@
 <!doctype html>
 <!--
-	Author by FreeHTML5.co
-	Twitter: https://twitter.com/fh5co
-	Facebook: https://fb.com/fh5co
-	URL: https://freehtml5.co
+	Author Jonathan Calo
+	Carnet 201213330
 -->
 <html lang="en">
 <head>
@@ -83,7 +81,7 @@
 
 		<div class="footer-bottom">
 			<div class="site-container footer-bottom-inner">
-				<p>© 2019 Author | Design by <a href="https://freehtml5.co/" target="_blank">freehtml5.co</a> | All rights Reserved.</p>
+				<p>© 2020 Author | Design by <a href="https://google.com" target="_blank">Jonathan Calo</a> | All rights Reserved.</p>
 				<div class="footer-bottom__img">
 					<img src="./images/footer-mastercard.png" alt="footer image">
 					<img src="./images/footer-paypal.png" alt="footer image">
@@ -97,10 +95,11 @@
 	<!-- Footer end -->
 
 	<!-- Scripts -->
-	<script src="js/jquery.min.js"></script>
 	<script src="js/slick.min.js"></script>
 	<script src="js/main.js"></script>
+	<!-- fin Scripts -->
 
+	<!-- CODIGO RESULTADOS BUSQUEDA Y MENU -->
 	<script>
 		var contador=0;
 		var anterior=false;
@@ -114,8 +113,8 @@
 												<li><a href="bibliotecaAdmin.html">Mi Biblioteca</a></li>
 												<li><a href="perfilAdmin.html">Perfil</a></li>
 												<li><a href="cargaMasiva.html">Carga Masiva</a></li>
-												<li><a href="#">CRUD de Videojuegos</a></li>
-												<li><a href="#">Generar Reportes</a></li>
+												<li><a href="CRUD.html">CRUD de Videojuegos</a></li>
+												<li><a href="CRUDReportes.html">Generar Reportes</a></li>
 												<li><a href="crearAdmin.html">Crear Usuario</a></li>
 											</ul>`
 			}else{
@@ -153,18 +152,15 @@
 														<img src="./images/download.svg"  alt="book image">
 													</div>
 												</a>
-												
 												<span class="single-book__price">${devolverguion(element.categoria1,element.categoria2,element.categoria3)}</span>
 												<h4 class="single-book__title">${element.nombre}</h4>
 												<span class="single-book__price">Q. ${element.precio}</span>
-												
 											</div>`
 				
 				});
 				if(resultados==0){
 					juegos_cards.innerHTML +=  `<h4 class="single-book__title">NO SE ENCONTRARON RESULTADOS</h4>`
 				}
-
 			})
 
 			function devolverguion(objeto1,objeto2,objeto3){
@@ -189,12 +185,10 @@
 			//var idUsuario = sessionStorage.getItem('id_usuario')
 			//alert("Bienvenido "+ nombre)
 		}
-
-		
-
 	</script>
+	<!-- FIN CODIGO RESULTADOS BUSQUEDA Y MENU -->
 
-
+	<!-- CODIGO BUSQUEDA -->
 	<script>
 		$("#busqueda").submit(function(event){
 			//Evitamos que el formulario se envíe de manera tradicional
@@ -218,24 +212,22 @@
 					//clearForm(recuperarForm);
 					sessionStorage.setItem('resultados_busqueda',respuesta['resultados'])
 					sessionStorage.setItem('valor_buscado',val)
-					window.alert("Resultados encontrados: " + respuesta['resultados'])
+					//window.alert("Resultados encontrados: " + respuesta['resultados'])
 					clearForm(busqueda);
 					window.location.href = "resultadoBusquedaAdmin.html";
 				}else{
 					window.alert("error")
-					
 				}
-					
 			})
 
 			}else{
 				window.alert("Ingrese algún valor en la búsqueda")
 			}
-						
-			
-
 		});
 	</script>
+	<!-- CODIGO BUSQUEDA -->
+
+	<!-- LIMPIAR FORMULARIO-->
 	<script>
 		function clearForm(oForm) {
 			var elements = oForm.elements;
@@ -266,8 +258,7 @@
 			}
 		}
 	</script>
-
-
+	<!-- FIN LIMPIAR FORMULARIO-->
 
 </body>
 </html>
